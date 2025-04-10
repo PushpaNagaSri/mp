@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-4k))^tm@)i3x#0e_64(egxy5g&f-0p(e^468j$_+^inncl#v@1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS =  ['lpsolver.onrender.com','127.0.0.1','localhost']
+ALLOWED_HOSTS =  ['lp_solver.onrender.com','127.0.0.1','localhost']
 
 
 # Application definition
