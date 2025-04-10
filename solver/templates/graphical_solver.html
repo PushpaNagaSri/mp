@@ -1,0 +1,41 @@
+{% extends 'solve_lp.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Linear Programming Solver</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <h1>Linear Programming Solver</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Select Method:</label>
+        <select name="method">
+            <option value="graphical">Graphical Method</option>
+        </select><br><br>
+        <label>Objective Function Coefficients (comma separated):</label>
+        <input type="text" name="objective" required><br><br>
+        <label>Constraints Coefficients (comma separated per row, new line for each constraint):</label>
+        <textarea name="constraints" rows="4" required></textarea><br><br>
+        <label>Constraint RHS Values (comma separated):</label>
+        <input type="text" name="rhs_values" required><br><br>
+        <label>Optimization Type:</label>
+        <select name="optimization">
+            <option value="maximize">Maximize</option>
+            <option value="minimize">Minimize</option>
+        </select><br><br>
+        <input type="submit" value="Solve">
+    </form>
+    {% if status %}
+    <div class="solution-box">
+        <h2>Solution:</h2>
+        <p><strong>Status:</strong> {{ status }}</p>
+        <p><strong>Objective Value:</strong> {{ optimal_value }}</p>
+        <p><strong>Decision Variables:</strong> {{ decision_variables }}</p>
+    </div>
+    <h3>Graphical Solution:</h3>
+    <img src="{{ image_path }}" alt="Graphical Solution">
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% extends 'solve_lp.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Programming Solver</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <h1>Linear Programming Solver</h1>
+    <form method="post" action="/">
+        {% csrf_token %}
+        <label>Select Method:</label>
+        <select name="method" required>
+            <option value="graphical">Graphical Method</option>
+            <option value="simplex">Simplex Method</option>
+        </select><br><br>
+        <label>Optimization Type:</label>
+        <select name="optimization">
+            <option value="minimize">Minimize</option>
+            <option value="maximize">Maximize</option>
+        </select><br><br>
+        <label>Objective Function Coefficients (comma-separated):</label><br>
+        <input type="text" name="objective" required placeholder="e.g., 3, 5"><br><br>
+        <label>Constraints Coefficients (one row per line, comma-separated):</label><br>
+        <textarea name="constraints" rows="4" cols="40" placeholder="e.g., 1, 1&#10;2, 3"></textarea><br><br>
+        <label>Right-hand Side Values (comma-separated):</label><br>
+        <input type="text" name="rhs_values" required placeholder="e.g., 4, 12"><br><br>
+        <button type="submit">Solve</button>
+    </form>
+    {% if error %}
+        <p class="error">Error: {{ error }}</p>
+    {% endif %}
+    {% if status %}
+        <div class="solution-box">
+            <h3>Solution Status: {{ status }}</h3>
+            {% if optimal_value != "N/A" %}
+                <p>Optimal Value: {{ optimal_value }}</p>
+                <p>Decision Variables: {{ decision_variables }}</p>
+            {% else %}
+                <p>No feasible solution found.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+    {% if image_path %}
+        <h3>Feasible Region:</h3>
+        <img src="{{ image_path }}" alt="Graphical Solution">
+    {% endif %}
+</body>
+</html>
